@@ -1,0 +1,1622 @@
+{
+  "info": {
+    "_postman_id": "b1f3d2f8-3d4a-4c14-b7d2-9f4a1db9d001",
+    "name": "Society Management System - 57 Features API Testing",
+    "description": "Comprehensive Postman collection mapping all 57 system APIs for the Society Management System.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "familyMemberId",
+      "value": ""
+    },
+    {
+      "key": "vehicleId",
+      "value": ""
+    },
+    {
+      "key": "moveOutId",
+      "value": ""
+    },
+    {
+      "key": "listingId",
+      "value": ""
+    },
+    {
+      "key": "sharedDocumentId",
+      "value": ""
+    },
+    {
+      "key": "sharedDocumentToken",
+      "value": ""
+    },
+    {
+      "key": "billId",
+      "value": ""
+    },
+    {
+      "key": "receiptId",
+      "value": ""
+    },
+    {
+      "key": "helperId",
+      "value": ""
+    },
+    {
+      "key": "visitorId",
+      "value": ""
+    },
+    {
+      "key": "complaintId",
+      "value": ""
+    },
+    {
+      "key": "amenityId",
+      "value": ""
+    },
+    {
+      "key": "bookingId",
+      "value": ""
+    },
+    {
+      "key": "accommodationId",
+      "value": ""
+    },
+    {
+      "key": "accommodationBookingId",
+      "value": ""
+    },
+    {
+      "key": "surveyId",
+      "value": ""
+    },
+    {
+      "key": "resolutionId",
+      "value": ""
+    },
+    {
+      "key": "discussionId",
+      "value": ""
+    },
+    {
+      "key": "eventId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication (Pre-requisites)",
+      "item": [
+        {
+          "name": "Register Resident",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Rahul Sharma\",\n  \"email\": \"rahul@example.com\",\n  \"phone\": \"9999999999\",\n  \"password\": \"Password@123\",\n  \"flatNumber\": \"A-101\",\n  \"wing\": \"A\",\n  \"residentType\": \"Owner\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/register"
+          }
+        },
+        {
+          "name": "Login Resident",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"rahul@example.com\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Get Current Logged-in User (Me)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/auth/me"
+          }
+        },
+        {
+          "name": "Logout (Destroy Session)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. My Home & Profile",
+      "item": [
+        {
+          "name": "[ID-01] Get My Profile Dashboard",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/profile/dashboard",
+            "description": "Fetch profile, flat details, family members, and vehicle counts."
+          }
+        },
+        {
+          "name": "[ID-02] Add Family Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Priya Sharma\",\n  \"relation\": \"Spouse\",\n  \"age\": 30,\n  \"phone\": \"7777777777\",\n  \"occupation\": \"Teacher\"\n}"
+            },
+            "url": "{{baseUrl}}/api/family",
+            "description": "Add a family member or co-resident to the resident's flat."
+          }
+        },
+        {
+          "name": "[ID-02] List Family Members",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/family",
+            "description": "List all family members added to the current flat."
+          }
+        },
+        {
+          "name": "[ID-02] Update Family Member",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"occupation\": \"Senior Teacher\"\n}"
+            },
+            "url": "{{baseUrl}}/api/family/{{familyMemberId}}",
+            "description": "Update details of a family member."
+          }
+        },
+        {
+          "name": "[ID-02] Delete Family Member",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/family/{{familyMemberId}}",
+            "description": "Remove a family member from the flat records."
+          }
+        },
+        {
+          "name": "[ID-03] Add Owned Vehicle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicleType\": \"Car\",\n  \"vehicleNumber\": \"MH12AB1234\",\n  \"brand\": \"Honda\",\n  \"color\": \"White\"\n}"
+            },
+            "url": "{{baseUrl}}/api/vehicles",
+            "description": "Add owned vehicle with color, brand, type and number plate verification."
+          }
+        },
+        {
+          "name": "[ID-03] List Owned Vehicles",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/vehicles",
+            "description": "List all registered vehicles for the current resident."
+          }
+        },
+        {
+          "name": "[ID-04] Tenant/Owner Status Management",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"residentType\": \"Tenant\"\n}"
+            },
+            "url": "{{baseUrl}}/api/profile",
+            "description": "Manage owner or tenant status through profile update details."
+          }
+        },
+        {
+          "name": "[ID-05] Upload KYC Document",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "documentType",
+                  "value": "Aadhaar",
+                  "type": "text"
+                },
+                {
+                  "key": "documentNumber",
+                  "value": "123412341234",
+                  "type": "text"
+                },
+                {
+                  "key": "documentFile",
+                  "type": "file",
+                  "description": "Select PDF or Image file"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/kyc/upload",
+            "description": "Upload KYC documents like Aadhaar, PAN or Passport."
+          }
+        },
+        {
+          "name": "[ID-05] List KYC Records",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/kyc",
+            "description": "List all uploaded KYC records for the current flat."
+          }
+        },
+        {
+          "name": "[ID-06] Submit Move-Out Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"moveOutDate\": \"2026-10-31\",\n  \"reason\": \"Relocating due to job change\"\n}"
+            },
+            "url": "{{baseUrl}}/api/moveout",
+            "description": "Submit move out date and reason for admin approval (Owner only)."
+          }
+        },
+        {
+          "name": "[ID-06] List Move-Out Requests",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/moveout",
+            "description": "List all move-out request submissions."
+          }
+        },
+        {
+          "name": "[ID-06] Get Move-Out Request by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/moveout/{{moveOutId}}",
+            "description": "Retrieve a specific move-out request."
+          }
+        },
+        {
+          "name": "[ID-06] Delete Move-Out Request",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/moveout/{{moveOutId}}",
+            "description": "Delete a pending move-out request."
+          }
+        },
+        {
+          "name": "[ID-07] Create Rental/Resale Listing",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "listingType",
+                  "value": "Rent",
+                  "type": "text"
+                },
+                {
+                  "key": "propertyType",
+                  "value": "Apartment",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Sleek 2 BHK for rent",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Well furnished apartment on floor 10",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "30000",
+                  "type": "text"
+                },
+                {
+                  "key": "contactNumber",
+                  "value": "9999988888",
+                  "type": "text"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "description": "Select flat images"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/listings",
+            "description": "Submit listing for admin approval."
+          }
+        },
+        {
+          "name": "[ID-07] List Listings",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/listings",
+            "description": "List all rental/resale listings."
+          }
+        },
+        {
+          "name": "[ID-07] Get Listing by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/listings/{{listingId}}",
+            "description": "Get listing details."
+          }
+        },
+        {
+          "name": "[ID-07] Update Listing",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 32000,\n  \"title\": \"Updated Sleek 2 BHK for rent\"\n}"
+            },
+            "url": "{{baseUrl}}/api/listings/{{listingId}}",
+            "description": "Update listing details."
+          }
+        },
+        {
+          "name": "[ID-07] Delete Listing",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/listings/{{listingId}}",
+            "description": "Delete listing and unlink files."
+          }
+        },
+        {
+          "name": "[ID-08] Share Flat Documents (Link Gen)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "documentName",
+                  "value": "Title Deed",
+                  "type": "text"
+                },
+                {
+                  "key": "expiryDate",
+                  "value": "2026-12-31",
+                  "type": "text"
+                },
+                {
+                  "key": "sharedWith",
+                  "value": "buyer@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "documentFile",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/documents/share",
+            "description": "Generate a secure tokenized sharing link for prospective buyers/tenants."
+          }
+        },
+        {
+          "name": "[ID-08] List Shared Documents",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/documents/shared",
+            "description": "List generated flat document sharing links."
+          }
+        },
+        {
+          "name": "[ID-08] Resolve Shared Document (Public)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/documents/share/resolve/{{sharedDocumentToken}}",
+            "description": "Unauthenticated public resolver endpoint to access the shared flat document."
+          }
+        },
+        {
+          "name": "[ID-08] Revoke Flat Document Share",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/documents/share/{{sharedDocumentId}}",
+            "description": "Delete shared document link records."
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Payments & Finance",
+      "item": [
+        {
+          "name": "[ID-09] View Outstanding Dues",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/bills/outstanding",
+            "description": "View outstanding maintenance dues and bills."
+          }
+        },
+        {
+          "name": "[ID-10] Initiate Payment (Get Signature)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"billId\": \"{{billId}}\",\n  \"amountPaid\": 3500\n}"
+            },
+            "url": "{{baseUrl}}/api/payments/initiate",
+            "description": "Initiate payment to get secure cryptographic proof signature."
+          }
+        },
+        {
+          "name": "[ID-10] Pay Maintenance Online (UPI/Card)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"billId\": \"{{billId}}\",\n  \"paymentMode\": \"UPI\",\n  \"amountPaid\": 3500,\n  \"paymentSignature\": \"paste_signature_here\",\n  \"autoPayApplied\": false\n}"
+            },
+            "url": "{{baseUrl}}/api/payments",
+            "description": "Pay maintenance online using dummy gateway signature verification."
+          }
+        },
+        {
+          "name": "[ID-11] View Payment History",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/payments/history",
+            "description": "List all payments completed."
+          }
+        },
+        {
+          "name": "[ID-11] Download Payment Receipt Details",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/receipts/{{receiptId}}",
+            "description": "Fetch payment receipt file details and paths."
+          }
+        },
+        {
+          "name": "[ID-12] Get Auto-pay Settings",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/payments/autopay",
+            "description": "Fetch automatic billing and recurring payment configurations."
+          }
+        },
+        {
+          "name": "[ID-12] Update Auto-pay Settings",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"autoPayEnabled\": true,\n  \"autoPayDay\": 5,\n  \"autoPayMode\": \"UPI\"\n}"
+            },
+            "url": "{{baseUrl}}/api/payments/autopay",
+            "description": "Update recurring payment schedule settings."
+          }
+        },
+        {
+          "name": "[ID-13] View Penalty Breakdown & Charges",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/bills",
+            "description": "Get all maintenance bills showing due amounts, penalties and detailed fees."
+          }
+        },
+        {
+          "name": "[ID-13] View Bill History",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/bills/history",
+            "description": "Get historical bill status records."
+          }
+        },
+        {
+          "name": "[ID-14] Raise Bill Dispute",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"billId\": \"{{billId}}\",\n  \"subject\": \"Incorrect Water Fee\",\n  \"description\": \"Please check water usage calculation, it seems higher than the sub-meter reading.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/disputes",
+            "description": "Raise dispute against wrong billing calculations."
+          }
+        },
+        {
+          "name": "[ID-14] List Billing Disputes",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/disputes",
+            "description": "List raised disputes."
+          }
+        },
+        {
+          "name": "[ID-15] Request NOC / No-Dues",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"Maintenance Clearance\",\n  \"purpose\": \"Required for flat sale transfer\"\n}"
+            },
+            "url": "{{baseUrl}}/api/noc/request",
+            "description": "Request No-Dues certificate / NOC."
+          }
+        },
+        {
+          "name": "[ID-15] List NOC Requests",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/noc",
+            "description": "List generated NOC request status."
+          }
+        },
+        {
+          "name": "[ID-16] Sub-metering Readings",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/utilities",
+            "description": "View individual water/electricity/gas consumption readings."
+          }
+        },
+        {
+          "name": "[ID-16] Create Utility Reading (Admin/Mock)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"utilityType\": \"Electricity\",\n  \"readingMonth\": \"June 2026\",\n  \"previousReading\": 100,\n  \"currentReading\": 250,\n  \"ratePerUnit\": 12\n}"
+            },
+            "url": "{{baseUrl}}/api/utilities",
+            "description": "Upload reading with current bounds checks."
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Visitor & Gate Management",
+      "item": [
+        {
+          "name": "[ID-17] Pre-approve Visitors",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitorName\": \"Amit Kumar\",\n  \"phone\": \"9876500000\",\n  \"purpose\": \"Guest Visit\",\n  \"expectedVisitAt\": \"2026-06-20T10:30:00.000Z\"\n}"
+            },
+            "url": "{{baseUrl}}/api/visitors/preapprove",
+            "description": "Pre-approve guests, delivery helpers, or visitors."
+          }
+        },
+        {
+          "name": "[ID-18] Approve Visitor (OTP verification)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitorId\": \"{{visitorId}}\",\n  \"otp\": \"123456\"\n}"
+            },
+            "url": "{{baseUrl}}/api/visitors/approve",
+            "description": "Verify OTP code at gate entry."
+          }
+        },
+        {
+          "name": "[ID-18] Deny Visitor Entry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitorId\": \"{{visitorId}}\",\n  \"reason\": \"Not expecting any guest today\"\n}"
+            },
+            "url": "{{baseUrl}}/api/visitors/deny",
+            "description": "Deny entry pass."
+          }
+        },
+        {
+          "name": "[ID-18] Record Visitor Checkout (Exit)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitorId\": \"{{visitorId}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/visitors/exit",
+            "description": "Checkout visitor."
+          }
+        },
+        {
+          "name": "[ID-19] View Visitor History",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/visitors/history",
+            "description": "View visitor entries for my flat."
+          }
+        },
+        {
+          "name": "[ID-20] Domestic Help Attendance Tracking (Get)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/helpers/attendance",
+            "description": "Get domestic staff checkin/out logs."
+          }
+        },
+        {
+          "name": "[ID-20] Add Domestic Helper",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"helperName\": \"Sunita Devi\",\n  \"role\": \"Maid\",\n  \"phone\": \"9876511111\",\n  \"shiftStart\": \"09:00\",\n  \"shiftEnd\": \"13:00\",\n  \"notes\": \"Morning cleaning helper\"\n}"
+            },
+            "url": "{{baseUrl}}/api/helpers",
+            "description": "Register domestic staff."
+          }
+        },
+        {
+          "name": "[ID-20] List Helpers",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/helpers",
+            "description": "List helpers registered to the flat."
+          }
+        },
+        {
+          "name": "[ID-21] Record Helper Attendance (Triggers Alert)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"helperId\": \"{{helperId}}\",\n  \"attendanceDate\": \"2026-06-05T00:00:00.000Z\",\n  \"checkInTime\": \"2026-06-05T09:00:00.000Z\",\n  \"checkOutTime\": \"2026-06-05T13:00:00.000Z\",\n  \"status\": \"Present\"\n}"
+            },
+            "url": "{{baseUrl}}/api/helpers/attendance",
+            "description": "Record attendance, enforcing shift and trigger check-in/out alerts."
+          }
+        },
+        {
+          "name": "[ID-22] Delivery Pre-authorization",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"deliveryPartner\": \"Blue Dart\",\n  \"recipientName\": \"Rahul Sharma\",\n  \"purpose\": \"Courier entry authorization\"\n}"
+            },
+            "url": "{{baseUrl}}/api/delivery/authorize",
+            "description": "Pre-authorize delivery partner for gate entry code."
+          }
+        },
+        {
+          "name": "[ID-23] Log Parcel Arrival",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"parcelType\": \"Courier\",\n  \"trackingNumber\": \"TRK-001122\",\n  \"courier\": \"Blue Dart\",\n  \"expectedDeliveryAt\": \"2026-06-21T12:00:00.000Z\"\n}"
+            },
+            "url": "{{baseUrl}}/api/parcels",
+            "description": "Record parcel handover at gate."
+          }
+        },
+        {
+          "name": "[ID-23] List Parcels",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/parcels",
+            "description": "List parcels."
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Complaints & Requests",
+      "item": [
+        {
+          "name": "[ID-24] Raise a Complaint",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "category",
+                  "value": "Maintenance",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Water leak in bathroom",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Bathroom washbasin tap has a major leak.",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/complaints",
+            "description": "Submit a complaint with optional image upload."
+          }
+        },
+        {
+          "name": "[ID-25] Track Complaint Status (Real-time stream SSE)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/complaints/stream",
+            "description": "Listens to Server-Sent Events stream for updates. To test in Postman, use GET on this URL."
+          }
+        },
+        {
+          "name": "[ID-26] Comment / Chat on Open Complaint",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Electrican called but hasn't arrived yet.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/complaints/{{complaintId}}/comment",
+            "description": "Add a comment/chat message to the complaint."
+          }
+        },
+        {
+          "name": "[ID-27] Rate Complaint Resolution",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 5\n}"
+            },
+            "url": "{{baseUrl}}/api/complaints/{{complaintId}}/rate",
+            "description": "Rate the quality of complaint resolution (1-5 scale)."
+          }
+        },
+        {
+          "name": "[ID-28] Submit Service Request (Intercom, Key Card, etc.)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "category",
+                  "value": "Intercom",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "New key card request",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Need an extra gate card for co-resident.",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/complaints/service/request",
+            "description": "Request keys, intercoms, or cards."
+          }
+        },
+        {
+          "name": "[ID-29] View Complaint History",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/complaints",
+            "description": "Retrieve historical complaints list."
+          }
+        },
+        {
+          "name": "Get Complaint by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/complaints/{{complaintId}}",
+            "description": "Retrieve a specific complaint detail."
+          }
+        },
+        {
+          "name": "Update Complaint Status",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "status",
+                  "value": "In Progress",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/complaints/{{complaintId}}",
+            "description": "Update complaint status (Open / In Progress / Resolved)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Amenity Booking",
+      "item": [
+        {
+          "name": "[ID-30] Browse Available Amenities",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/amenities/amenities",
+            "description": "List all society amenities."
+          }
+        },
+        {
+          "name": "[ID-30] Get Specific Amenity Details",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/amenities/amenities/{{amenityId}}",
+            "description": "Get detail of amenity."
+          }
+        },
+        {
+          "name": "[ID-31] Book Amenity Slot",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amenityId\": \"{{amenityId}}\",\n  \"bookingDate\": \"2026-06-15\",\n  \"startTime\": \"14:00\",\n  \"endTime\": \"16:00\",\n  \"duration\": 2,\n  \"notes\": \"Birthday party celebration\"\n}"
+            },
+            "url": "{{baseUrl}}/api/amenities/bookings",
+            "description": "Book slots, checking capacity."
+          }
+        },
+        {
+          "name": "[ID-32] View My Bookings",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/amenities/bookings",
+            "description": "List my amenity bookings."
+          }
+        },
+        {
+          "name": "[ID-33] Cancel Booking",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/amenities/bookings/{{bookingId}}/cancel",
+            "description": "Cancel booking within allowed window (24 hours in advance)."
+          }
+        },
+        {
+          "name": "[ID-34] Get Booking by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/amenities/bookings/{{bookingId}}",
+            "description": "Retrieve booking details (confirmation/reminders)."
+          }
+        },
+        {
+          "name": "[ID-35] Rate & Review Society Amenity",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 5,\n  \"review\": \"Extremely clean and nice environment.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/amenities/bookings/{{bookingId}}/rate",
+            "description": "Submit rating."
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Safety & Emergency",
+      "item": [
+        {
+          "name": "[ID-36] SOS / Panic Button Activation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alertType\": \"Medical\",\n  \"description\": \"Elderly resident requires medical support.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/emergency/sos",
+            "description": "Instant panic alert sent to gate security and committee."
+          }
+        },
+        {
+          "name": "[ID-36] List triggered SOS Alerts",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/emergency/sos",
+            "description": "List my triggered SOS alerts."
+          }
+        },
+        {
+          "name": "[ID-37] Emergency Contact List",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/emergency/contacts",
+            "description": "Emergency contact numbers (fire, helpline, gate security)."
+          }
+        },
+        {
+          "name": "[ID-38] In-app Intercom Calling request",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "category",
+                  "value": "Intercom",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Gate 1 dialing link setup",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Dialing security sync configuration request."
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/complaints/service/request",
+            "description": "Simulated intercom calling request sent to society office."
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Community & Communication",
+      "item": [
+        {
+          "name": "[ID-39] View Notice Board",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/notices",
+            "description": "Browse circulars."
+          }
+        },
+        {
+          "name": "[ID-39] Get Specific Notice by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/notices/{{noticeId}}",
+            "description": "Retrieve notice details."
+          }
+        },
+        {
+          "name": "[ID-40] Receive Push & SMS Notifications list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/notifications",
+            "description": "Check resident system notifications."
+          }
+        },
+        {
+          "name": "[ID-40] Mark Notification as Read",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/notifications/{{notificationId}}/read",
+            "description": "Mark a notification as read."
+          }
+        },
+        {
+          "name": "[ID-41] Emergency Alert Reception list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/emergency/sos",
+            "description": "Receive active emergency SOS status triggers."
+          }
+        },
+        {
+          "name": "[ID-42] Participate in Polls (Vote)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"optionIndex\": 1\n}"
+            },
+            "url": "{{baseUrl}}/api/community/polls/{{pollId}}/vote",
+            "description": "Cast vote."
+          }
+        },
+        {
+          "name": "[ID-42] List Notice Board Polls",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/community/polls",
+            "description": "List active voting polls."
+          }
+        },
+        {
+          "name": "[ID-43] Community discussion board forum list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/community/discussions",
+            "description": "List discussions."
+          }
+        },
+        {
+          "name": "[ID-43] Create Discussion Board Thread",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Water timings shift\",\n  \"content\": \"Can we request shifting supply to 7:00 AM instead of 6:00 AM?\",\n  \"category\": \"Maintenance\"\n}"
+            },
+            "url": "{{baseUrl}}/api/community/discussions",
+            "description": "Post a discussion."
+          }
+        },
+        {
+          "name": "[ID-43] Comment on Discussion Thread",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"I strongly agree with this suggestion.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/community/discussions/{{discussionId}}/comment",
+            "description": "Add a comment."
+          }
+        },
+        {
+          "name": "[ID-44] Society Events Calendar",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/community/events",
+            "description": "View upcoming events."
+          }
+        },
+        {
+          "name": "[ID-44] Register for Society Event",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/community/events/{{eventId}}/register",
+            "description": "Register."
+          }
+        },
+        {
+          "name": "[ID-44] View My Event Registrations",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/community/events/my-registrations",
+            "description": "Get register history."
+          }
+        },
+        {
+          "name": "[ID-45] Resident-to-resident marketplace",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/community/marketplace",
+            "description": "Browse marketplace items."
+          }
+        },
+        {
+          "name": "[ID-45] Post item to Marketplace",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Selling leather sofa",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "3-seater sofa in mint condition",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "Furniture",
+                  "type": "text"
+                },
+                {
+                  "key": "itemType",
+                  "value": "For Sale",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "8000",
+                  "type": "text"
+                },
+                {
+                  "key": "contactNumber",
+                  "value": "9999988888",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/community/marketplace",
+            "description": "Post item."
+          }
+        },
+        {
+          "name": "[ID-46] Post Carpool Offer (Marketplace Service)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Carpool to IT Park daily",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Leaving daily at 8:30 AM. 3 slots.",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "Services",
+                  "type": "text"
+                },
+                {
+                  "key": "itemType",
+                  "value": "Free",
+                  "type": "text"
+                },
+                {
+                  "key": "contactNumber",
+                  "value": "9999988888",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/community/marketplace",
+            "description": "Share rideshare details."
+          }
+        },
+        {
+          "name": "[ID-47] Neighbor directory opt-in list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/community/discussions",
+            "description": "Browse shared resident contact details via discussion forum."
+          }
+        },
+        {
+          "name": "[ID-48] Browse Lost & Found",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/community/lostfound",
+            "description": "List items."
+          }
+        },
+        {
+          "name": "[ID-48] Post Lost/Found Item",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "itemType",
+                  "value": "Lost",
+                  "type": "text"
+                },
+                {
+                  "key": "itemName",
+                  "value": "Honda Car Keys",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Red tag keychain keys",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "Keys",
+                  "type": "text"
+                },
+                {
+                  "key": "location",
+                  "value": "Gym locker room",
+                  "type": "text"
+                },
+                {
+                  "key": "dateLostFound",
+                  "value": "2026-06-06",
+                  "type": "text"
+                },
+                {
+                  "key": "contactNumber",
+                  "value": "9999988888",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/community/lostfound",
+            "description": "Upload report."
+          }
+        },
+        {
+          "name": "[ID-49] Browse Accommodations / Guest Rooms",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/accommodations",
+            "description": "View list."
+          }
+        },
+        {
+          "name": "[ID-49] Book Guest Room",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accommodationId\": \"{{accommodationId}}\",\n  \"guestName\": \"Uncle Sharma\",\n  \"guestCount\": 2,\n  \"checkInDate\": \"2026-07-01T12:00:00.000Z\",\n  \"checkOutDate\": \"2026-07-05T10:00:00.000Z\",\n  \"notes\": \"Ground floor suite preferred\"\n}"
+            },
+            "url": "{{baseUrl}}/api/accommodations/bookings",
+            "description": "Book room, enforcing double-booking constraints."
+          }
+        },
+        {
+          "name": "[ID-49] List my Guest Room Bookings",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/accommodations/bookings",
+            "description": "View bookings."
+          }
+        },
+        {
+          "name": "[ID-49] Cancel Guest Room Booking",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/accommodations/bookings/{{accommodationBookingId}}/cancel",
+            "description": "Cancel guest room booking."
+          }
+        },
+        {
+          "name": "[ID-50] Get Active Feedback Surveys",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/surveys",
+            "description": "Browse surveys."
+          }
+        },
+        {
+          "name": "[ID-50] Submit annual feedback satisfaction survey response",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"answers\": [\n    {\n      \"questionIndex\": 0,\n      \"answer\": 5\n    },\n    {\n      \"questionIndex\": 1,\n      \"answer\": \"yes\"\n    }\n  ]\n}"
+            },
+            "url": "{{baseUrl}}/api/surveys/{{surveyId}}/responses",
+            "description": "Submit answers, blocking duplicate submissions."
+          }
+        },
+        {
+          "name": "[ID-50] View My Survey Responses",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/surveys/responses/my",
+            "description": "List survey answers."
+          }
+        },
+        {
+          "name": "[ID-51] View Committee Resolutions/Decisions",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/resolutions",
+            "description": "List decisions."
+          }
+        },
+        {
+          "name": "[ID-51] Submit feedback on committee resolution",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"feedbackText\": \"Fully support the green color scheme.\",\n  \"reaction\": \"support\",\n  \"rating\": 5\n}"
+            },
+            "url": "{{baseUrl}}/api/resolutions/{{resolutionId}}/feedback",
+            "description": "Submit feedback, blocking duplicate feedback logs."
+          }
+        },
+        {
+          "name": "[ID-51] List Feedback on Committee Resolution",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/resolutions/{{resolutionId}}/feedback",
+            "description": "Fetch all reviews."
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Documents & Certificates",
+      "item": [
+        {
+          "name": "[ID-52] Download Society bylaws, rules, minutes documents",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/documents",
+            "description": "List and access files."
+          }
+        },
+        {
+          "name": "[ID-53] Access my personal documents - NOC certificate list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/noc",
+            "description": "Get my NOC list."
+          }
+        },
+        {
+          "name": "[ID-53] Access my personal documents - Receipts list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/payments/history",
+            "description": "View receipts."
+          }
+        },
+        {
+          "name": "[ID-54] View society contact directory",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/documents",
+            "description": "Contacts directories are seeded as society documents."
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. Parking Management",
+      "item": [
+        {
+          "name": "[ID-55] View my allocated parking slots",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/vehicles",
+            "description": "Assigned slots are returned with the vehicles list."
+          }
+        },
+        {
+          "name": "[ID-56] Register/Update Vehicle details",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"color\": \"Silver\"\n}"
+            },
+            "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}",
+            "description": "Update color/brand details."
+          }
+        },
+        {
+          "name": "[ID-57] Request Additional or Visitor Parking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitorName\": \"Guest Parking\",\n  \"phone\": \"9876543210\",\n  \"purpose\": \"Request temporary slot for vehicle MH12AB1234\",\n  \"expectedVisitAt\": \"2026-06-20T10:30:00.000Z\"\n}"
+            },
+            "url": "{{baseUrl}}/api/visitors/preapprove",
+            "description": "Visitor preapprove form handles temporary parking allocation code request."
+          }
+        }
+      ]
+    }
+  ]
+}
