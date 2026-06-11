@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const IncidentSchema = new mongoose.Schema({
-  incidentType: { type: String, enum: ['accident', 'fight', 'theft', 'fire', 'medical', 'suspicious', 'vandalism', 'other'], required: true },
+  incidentType: { type: String, enum: ['accident', 'fight', 'theft', 'fire', 'medical', 'suspicious', 'vandalism','emergency','other'], required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
   location: { type: String, required: true },

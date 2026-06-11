@@ -20,7 +20,7 @@ exports.applyLeave = async (req, res) => {
     });
 
     await leave.save();
-    res.status(201).json({ message: 'Leave application submitted', leave });
+    res.status(201).json({ message: 'Leave application submitted', data: leave });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

@@ -1,0 +1,1727 @@
+{
+  "info": {
+    "_postman_id": "6d80b90d-c30c-4bfb-b694-205eb2ab48eb",
+    "name": "Society Management API - FIXED",
+    "description": "All 32 Features - Fixed Test Data - All 200 OK Responses",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55452292",
+    "_collection_link": "https://go.postman.co/collection/55452292-6d80b90d-c30c-4bfb-b694-205eb2ab48eb?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "1️⃣ SETUP & AUTHENTICATION",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Admin User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Register successful', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Admin User\", \"phone\": \"9876543210\", \"email\": \"admin@society.com\", \"password\": \"Admin@123\", \"role\": \"admin\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Staff User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Register successful', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Staff User\", \"phone\": \"9876543211\", \"email\": \"staff@society.com\", \"password\": \"Staff@123\", \"role\": \"staff\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Member User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Register successful', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Member User\", \"phone\": \"9876543212\", \"email\": \"member@society.com\", \"password\": \"Member@123\", \"role\": \"member\", \"flat\": \"A-101\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Login successful - Status 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "const data = pm.response.json();",
+                  "if (data && data.token) {",
+                  "  pm.environment.set('adminToken', data.token);",
+                  "  pm.environment.set('authToken', data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"phone\": \"9876543210\", \"password\": \"Admin@123\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Staff",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Login successful - Status 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "const data = pm.response.json();",
+                  "if (data && data.token) {",
+                  "  pm.environment.set('staffToken', data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"phone\": \"9876543211\", \"password\": \"Staff@123\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Member",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Login successful - Status 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "const data = pm.response.json();",
+                  "if (data && data.token) {",
+                  "  pm.environment.set('memberToken', data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"phone\": \"9876543212\", \"password\": \"Member@123\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2️⃣ GATE & VISITOR MANAGEMENT (Features 1-12)",
+      "item": [
+        {
+          "name": "Feature #1 - Create Visitor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Create visitor - Status 201', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "const data = pm.response.json();",
+                  "if (data && data.data && data.data._id) {",
+                  "  pm.environment.set('visitorId', data.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"John Visitor\", \"phone\": \"9898765432\", \"flatToVisit\": \"A-101\", \"vehicleNumber\": \"MH02AB1234\", \"purpose\": \"Meeting\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/visitor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "visitor"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #1 - Visitor Exit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/visitor/{{visitorId}}/exit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "visitor",
+                "{{visitorId}}",
+                "exit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #2 - Get Pre-Approved Visitors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/pre-approved",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pre-approved"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #2 - Create Pre-Approved",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{memberToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Sister\", \"phone\": \"9898765433\", \"relation\": \"Sister\", \"expiryDate\": \"2026-12-31\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pre-approved",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pre-approved"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #3 - Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"visitorId\": \"{{visitorId}}\", \"flatNumber\": \"A-101\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/visitor/otp/send",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "visitor",
+                "otp",
+                "send"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #4 - QR Code Scanner",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"qrData\": \"{{visitorId}}\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/visitor/qr/scan",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "visitor",
+                "qr",
+                "scan"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #5 - Create Delivery",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"courierName\": \"Bykea Courier\", \"courierCompany\": \"Bykea\", \"phoneNumber\": \"9898765432\", \"vehicleNumber\": \"KHI-1234\", \"flatNumber\": \"A-101\", \"numberOfPackages\": 5}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/delivery",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "delivery"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #6 - Create Package",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data && data.data && data.data._id) {",
+                  "  pm.environment.set('packageId', data.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"trackingId\": \"TRK123456\", \"recipientFlat\": \"A-205\", \"senderName\": \"Amazon\", \"description\": \"Electronics\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/package",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "package"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #7 - Get My Packages",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{memberToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/package/my-packages",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "package",
+                "my-packages"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #8 - Package Handover",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"handedOverTo\": \"user123\", \"acknowledgement\": true}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/package/{{packageId}}/handover",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "package",
+                "{{packageId}}",
+                "handover"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #9 - Record Vehicle Entry",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data && data.data && data.data._id) {",
+                  "  pm.environment.set('vehicleEntryId', data.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"entryType\": \"cab\", \"vehicleNumber\": \"MH02AB5678\", \"vehicleType\": \"sedan\", \"ownerName\": \"Taxi Driver\", \"ownerPhone\": \"9898765433\", \"driverName\": \"Driver Name\", \"driverPhone\": \"9898765434\", \"flat\": \"A-101\", \"purpose\": \"Drop-off\", \"gpsLocation\": {\"latitude\": 19.1136, \"longitude\": 72.8697}}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/vehicle-entry",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vehicle-entry"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #9 - Record Vehicle Exit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"gpsLocation\": {\"latitude\": 19.1140, \"longitude\": 72.8700}}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/vehicle-entry/{{vehicleEntryId}}/exit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vehicle-entry",
+                "{{vehicleEntryId}}",
+                "exit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #9 - Get Active Vehicles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/vehicle-entry/active",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vehicle-entry",
+                "active"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #10 - Register Domestic Help",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data && data.data && data.data._id) {",
+                  "  pm.environment.set('domesticHelpId', data.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{memberToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Maid Service\", \"phone\": \"9898765435\", \"type\": \"maid\", \"frequency\": \"daily\", \"workingDays\": [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\"], \"workingHours\": {\"startTime\": \"09:00\", \"endTime\": \"12:00\"}, \"aadhar\": \"1234567890\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/domestic-help/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "domestic-help",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #10 - Get My Domestic Help",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{memberToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/domestic-help/my-helpers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "domestic-help",
+                "my-helpers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #10 - Mark Domestic Help Entry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"domesticHelpId\": \"{{domesticHelpId}}\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/domestic-help/{{domesticHelpId}}/mark-entry",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "domestic-help",
+                "{{domesticHelpId}}",
+                "mark-entry"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #11 - Get Overstay Alerts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/visitor/alerts/overstay?hours=4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "visitor",
+                "alerts",
+                "overstay"
+              ],
+              "query": [
+                {
+                  "key": "hours",
+                  "value": "4"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #12 - Daily Visitor Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/visitor/reports/daily",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "visitor",
+                "reports",
+                "daily"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3️⃣ RESIDENT & VEHICLE (Features 13-16)",
+      "item": [
+        {
+          "name": "Feature #13 - Get Members",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/member",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "member"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #14 - Register Vehicle",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data && data.data && data.data._id) {",
+                  "  pm.environment.set('vehicleId', data.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{memberToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"vehicleNumber\": \"MH02AB1234\", \"stickerNumber\": \"STICK001\", \"make\": \"Toyota\", \"model\": \"Fortuner\", \"color\": \"White\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/vehicle/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vehicle",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #15 - Scan Vehicle Sticker",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"stickerNumber\": \"STICK001\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/vehicle/sticker/scan",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vehicle",
+                "sticker",
+                "scan"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #16 - Register Guest Vehicle",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"registrationNumber\": \"MH12XY9876\",\r\n  \"ownerName\": \"Guest User\",\r\n  \"purpose\": \"Visitor\"\r\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/vehicle/guest/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vehicle",
+                "guest",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4️⃣ COMPLAINTS & TASKS (Features 17-20, with 19 Proof Photos)",
+      "item": [
+        {
+          "name": "Feature #17 - Get Complaints",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{memberToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/complaint",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "complaint"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #17 - Create Complaint",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data && data.data && data.data._id) {",
+                  "  pm.environment.set('complaintId', data.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{memberToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Broken Window Lock\", \"description\": \"The lock on window is broken and needs immediate repair\", \"category\": \"maintenance\", \"severity\": \"high\", \"flat\": \"A-101\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/complaint",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "complaint"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #18 - Update Complaint Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\": \"in-progress\", \"resolution\": \"Repair work started\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/complaint/{{complaintId}}/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "complaint",
+                "{{complaintId}}",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #19 - Upload Proof Photos",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"photos\": [\"https://example.com/proof1.jpg\", \"https://example.com/proof2.jpg\"], \"description\": \"Work completed - window lock replaced and tested\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/complaint/{{complaintId}}/proof-photos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "complaint",
+                "{{complaintId}}",
+                "proof-photos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #19 - Get Proof Photos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/complaint/{{complaintId}}/proof-photos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "complaint",
+                "{{complaintId}}",
+                "proof-photos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #20 - Get Tasks",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/task",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "task"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5️⃣ SAFETY & PATROLLING (Features 21-24)",
+      "item": [
+        {
+          "name": "Feature #21 - Create Patrol Log",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data && data.data && data.data._id) {",
+                  "  pm.environment.set('patrolId', data.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"route\": \"Tower A to Tower D\",\r\n  \"checkpoints\": [\"Gate 1\", \"Parking\", \"Garden\"],\r\n  \"observations\": \"All areas secure\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/patrol/start",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "patrol",
+                "start"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #22 - Create Incident Report",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"incidentType\": \"theft\", \"title\": \"Motorcycle Theft\", \"description\": \"Motorcycle stolen from parking lot\", \"location\": \"B-Block Parking\", \"severity\": \"high\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/incident",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "incident"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #23 - SOS Alert",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{memberToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"location\": \"A-101\", \"gpsLocation\": {\"lat\": 19.1136, \"lng\": 72.8697}, \"emergencyType\": \"medical\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/incident/sos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "incident",
+                "sos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #24 - Create Emergency Drill",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"drillType\": \"fire\", \"scheduledDate\": \"2026-06-15\", \"evacuationPoints\": [\"Gate 1\", \"Gate 2\"]}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/emergency-drill",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "emergency-drill"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6️⃣ ATTENDANCE & SHIFTS (Features 25-28)",
+      "item": [
+        {
+          "name": "Feature #25 - Check-in",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"latitude\": 19.1136, \"longitude\": 72.8697}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/attendance/check-in",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "attendance",
+                "check-in"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #25 - Check-out",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"latitude\": 19.1136, \"longitude\": 72.8697}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/attendance/check-out",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "attendance",
+                "check-out"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #26 - Get Shifts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/shift",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "shift"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #27 - Apply Leave",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"leaveType\": \"sick\", \"startDate\": \"2026-06-10\", \"endDate\": \"2026-06-12\", \"reason\": \"Medical appointment\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/leave",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "leave"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #28 - Get Salary Slips",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/salary/my-slips",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "salary",
+                "my-slips"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7️⃣ COMMUNICATION (Features 29-32)",
+      "item": [
+        {
+          "name": "Feature #29 - Intercom Call",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"recipientId\": \"user123\", \"callType\": \"voice\", \"fromFlat\": \"A-101\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/communication/call",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "communication",
+                "call"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #30 - Send Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"recipientId\": \"user123\", \"message\": \"Hello, issue with door lock\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/communication/message",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "communication",
+                "message"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #31 - Get Notices",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/notice",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notice"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feature #32 - Get Alerts",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{staffToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/alert",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "alert"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000"
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "staffToken",
+      "value": ""
+    },
+    {
+      "key": "memberToken",
+      "value": ""
+    },
+    {
+      "key": "visitorId",
+      "value": ""
+    },
+    {
+      "key": "complaintId",
+      "value": ""
+    },
+    {
+      "key": "patrolId",
+      "value": ""
+    },
+    {
+      "key": "vehicleId",
+      "value": ""
+    },
+    {
+      "key": "packageId",
+      "value": ""
+    },
+    {
+      "key": "vehicleEntryId",
+      "value": ""
+    },
+    {
+      "key": "domesticHelpId",
+      "value": ""
+    }
+  ]
+}

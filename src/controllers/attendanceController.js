@@ -27,7 +27,7 @@ exports.checkIn = async (req, res) => {
 
     await attendance.save();
 
-    res.json({ message: 'Checked in', attendance });
+    res.json({ message: 'Checked in', data: attendance });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

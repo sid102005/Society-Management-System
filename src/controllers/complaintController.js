@@ -22,7 +22,7 @@ exports.createComplaint = async (req, res) => {
     });
 
     await complaint.save();
-    res.status(201).json({ message: 'Complaint created', complaint });
+    res.status(201).json({ message: 'Complaint created', data: complaint });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -97,13 +97,94 @@ exports.uploadProofPhotos = async (req, res) => {
     const complaint = await Complaint.findById(req.params.id);
     if (!complaint) return res.status(404).json({ message: 'Complaint not found' });
 
-    // TODO: Integrate multer and cloud storage (AWS S3/Cloudinary)
-    // For now, use file URLs
-    const photoUrls = req.body.photos || [];
-    complaint.proofPhotos.push(...photoUrls);
+    // Check authorization - only assigned staff or filer can upload proof
+    if (
+  complaint.assignedTo?.toString() !== req.user.id &&
+  complaint.filedBy?.toString() !== req.user.id
+) {
+  return res.status(403).json({
+    message: 'Unauthorized to upload proof'
+  });
+}
+
+    const { photos, description } = req.body;
+
+    if (!photos || !Array.isArray(photos) || photos.length === 0) {
+      return res.status(400).json({ message: 'At least one photo URL required' });
+    }
+
+    // Add proof photos with metadata
+    const newProofs = photos.map(photo => ({
+      url: photo,
+      uploadedBy: req.user.id,
+      uploadedAt: new Date(),
+      description: description || ''
+    }));
+
+    if (!complaint.proofPhotos) {
+      complaint.proofPhotos = [];
+    }
+
+    complaint.proofPhotos.push(...newProofs);
+    complaint.status = 'in-progress';
+    
+    // Update status history
+    complaint.statusHistory.push({
+      status: 'in-progress',
+      changedAt: new Date(),
+      changedBy: req.user.id,
+      comment: 'Proof photos uploaded'
+    });
 
     await complaint.save();
-    res.json({ message: 'Photos uploaded', complaint });
+    
+    res.json({ 
+      message: 'Proof photos uploaded successfully', 
+      proofCount: complaint.proofPhotos.length,
+      complaint 
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Feature #19: Get complaint proof photos
+exports.getProofPhotos = async (req, res) => {
+  try {
+    const complaint = await Complaint.findById(req.params.id)
+      .populate('proofPhotos.uploadedBy', 'name');
+
+    if (!complaint) return res.status(404).json({ message: 'Complaint not found' });
+
+    res.json({
+      complaintId: complaint._id,
+      title: complaint.title,
+      status: complaint.status,
+      proofPhotos: complaint.proofPhotos || [],
+      totalPhotos: complaint.proofPhotos ? complaint.proofPhotos.length : 0
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Feature #19: Delete proof photo
+exports.deleteProofPhoto = async (req, res) => {
+  try {
+    const { photoId } = req.body;
+    const complaint = await Complaint.findById(req.params.id);
+
+    if (!complaint) return res.status(404).json({ message: 'Complaint not found' });
+
+    // Remove photo from array
+    complaint.proofPhotos = complaint.proofPhotos.filter(p => p._id.toString() !== photoId);
+    await complaint.save();
+
+    res.json({ 
+      message: 'Photo deleted',
+      proofPhotos: complaint.proofPhotos,
+      totalPhotos: complaint.proofPhotos.length
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

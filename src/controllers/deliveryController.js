@@ -17,7 +17,7 @@ exports.recordDeliveryEntry = async (req, res) => {
     });
 
     await delivery.save();
-    res.status(201).json({ message: 'Delivery entry recorded', delivery });
+    res.status(201).json({ message: 'Delivery entry recorded', data: delivery });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

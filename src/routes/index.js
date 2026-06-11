@@ -20,6 +20,10 @@ const notice = require('./notice');
 const alert = require('./alert');
 const communication = require('./communication');
 const member = require('./member');
+const domesticHelp = require('./domesticHelp');
+const emergencyDrill = require('./emergencyDrill');
+const salary = require('./salary');
+const vehicleEntry = require('./vehicleEntry');
 
 // Register all routes
 router.use('/auth', auth);
@@ -31,6 +35,7 @@ router.use('/package', packageRoutes);
 router.use('/pre-approved', preApprovedVisitor);
 router.use('/blacklist', blacklistVisitor);
 router.use('/vehicle', vehicle);
+router.use('/vehicle-entry', vehicleEntry);
 router.use('/incident', incident);
 router.use('/attendance', attendance);
 router.use('/shift', shift);
@@ -40,5 +45,8 @@ router.use('/notice', notice);
 router.use('/alert', alert);
 router.use('/communication', communication);
 router.use('/member', member);
+router.use('/domestic-help', domesticHelp);
+router.use('/emergency-drill', emergencyDrill);
+router.use('/salary', salary);
 
 module.exports = router;

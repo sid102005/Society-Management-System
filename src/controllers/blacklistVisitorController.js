@@ -17,7 +17,7 @@ exports.addToBlacklist = async (req, res) => {
     });
 
     await blacklisted.save();
-    res.status(201).json({ message: 'Added to blacklist', blacklisted });
+    res.status(201).json({ message: 'Added to blacklist', data: blacklisted });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

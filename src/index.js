@@ -13,12 +13,19 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// Rate limiting
+// Rate limiting - more generous for development
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 1000 // limit each IP to 1000 requests per windowMs
 });
-app.use('/api/', limiter);
+
+// Apply rate limit to all API routes except auth
+app.use('/api/', (req, res, next) => {
+  if (req.path.startsWith('/auth')) {
+    return next();
+  }
+  limiter(req, res, next);
+});
 
 // Routes
 app.use('/api', routes);
@@ -34,7 +41,15 @@ app.get('/health', (req, res) => {
 const PORT = process.env.PORT || 4000;
 connectDB(process.env.MONGO_URI || 'mongodb://localhost:27017/society')
   .then(() => {
-    app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
+    const server = app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
+    server.on('error', err => {
+      if (err.code === 'EADDRINUSE') {
+        console.error(`❌ Port ${PORT} is already in use. Stop other servers using that port or set a different PORT in .env.`);
+      } else {
+        console.error('❌ Server error:', err);
+      }
+      process.exit(1);
+    });
   })
   .catch(err => {
     console.error('❌ Database connection error:', err);

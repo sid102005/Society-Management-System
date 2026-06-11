@@ -15,7 +15,7 @@ exports.startPatrol = async (req, res) => {
     });
 
     await patrolLog.save();
-    res.status(201).json({ message: 'Patrol started', patrolLog });
+    res.status(201).json({ message: 'Patrol started', data: patrolLog });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

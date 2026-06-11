@@ -14,7 +14,7 @@ exports.createShift = async (req, res) => {
     });
 
     await shift.save();
-    res.status(201).json({ message: 'Shift created', shift });
+    res.status(201).json({ message: 'Shift created', data: shift });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

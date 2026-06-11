@@ -26,5 +26,6 @@ router.get('/reports/daily', auth, authorize('admin', 'staff'), visitorControlle
 
 // Feature #4: QR Code
 router.get('/:id/qr-code', auth, visitorController.generateQRCode);
+router.post('/qr/scan', auth, authorize('admin', 'staff'), visitorController.scanQRCode);
 
 module.exports = router;

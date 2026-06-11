@@ -32,7 +32,7 @@ exports.recordPackage = async (req, res) => {
       });
     }
 
-    res.status(201).json({ message: 'Package recorded', package: packageDoc });
+    res.status(201).json({ message: 'Package recorded', data: packageDoc });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

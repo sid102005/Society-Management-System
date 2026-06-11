@@ -10,7 +10,12 @@ const ComplaintSchema = new mongoose.Schema({
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   flat: { type: String, required: true },
   photos: [{ type: String }], // URLs of uploaded photos
-  proofPhotos: [{ type: String }], // Photos after resolution
+  proofPhotos: [{
+    url: { type: String, required: true },
+    uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    uploadedAt: { type: Date, default: Date.now },
+    description: String
+  }], // Photos after resolution with metadata
   statusHistory: [{
     status: String,
     changedAt: { type: Date, default: Date.now },

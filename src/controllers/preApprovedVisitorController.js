@@ -26,7 +26,7 @@ exports.createPreApproved = async (req, res) => {
     preApproved.qrCode = await QRCode.toDataURL(qrData);
 
     await preApproved.save();
-    res.status(201).json({ message: 'Pre-approved visitor added', preApproved });
+    res.status(201).json({ message: 'Pre-approved visitor added', data: preApproved });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

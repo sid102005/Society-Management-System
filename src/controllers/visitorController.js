@@ -37,7 +37,7 @@ exports.createVisitor = async (req, res) => {
 
     res.status(201).json({
       message: 'Visitor entry recorded',
-      visitor,
+      data: visitor,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -264,6 +264,67 @@ exports.generateQRCode = async (req, res) => {
     const qrData = JSON.stringify({ visitorId, timestamp: Date.now() });
     const qrCode = await QRCode.toDataURL(qrData);
     res.json({ qrCode });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Feature #4: Scan & verify QR code / barcode
+exports.scanQRCode = async (req, res) => {
+  try {
+    const { qrData } = req.body;
+
+    // Parse QR data
+    let parsedData;
+    try {
+      parsedData = JSON.parse(qrData);
+    } catch (e) {
+      return res.status(400).json({ message: 'Invalid QR code format' });
+    }
+
+    const { visitorId, preApprovedId, visitorName, memberFlat } = parsedData;
+
+    if (visitorId) {
+      // Scan for regular visitor QR
+      const visitor = await Visitor.findById(visitorId);
+      if (!visitor) return res.status(404).json({ message: 'Visitor not found' });
+
+      res.json({
+        type: 'visitor',
+        visitorId,
+        visitor: {
+          name: visitor.name,
+          phone: visitor.phone,
+          flat: visitor.flatToVisit,
+          purpose: visitor.purpose,
+          preApproved: visitor.preApproved,
+          status: visitor.outTime ? 'exited' : 'active'
+        }
+      });
+    } else if (preApprovedId) {
+      // Scan for pre-approved visitor QR
+      const preApproved = await PreApprovedVisitor.findById(preApprovedId);
+      if (!preApproved) return res.status(404).json({ message: 'Pre-approved visitor not found' });
+
+      // Check if expired
+      if (preApproved.expiryDate && new Date() > new Date(preApproved.expiryDate)) {
+        return res.status(400).json({ message: 'QR code expired' });
+      }
+
+      res.json({
+        type: 'pre-approved',
+        preApprovedId,
+        visitor: {
+          name: preApproved.name,
+          phone: preApproved.phone,
+          relation: preApproved.relation,
+          memberFlat: preApproved.memberFlat,
+          qrCodeValid: true
+        }
+      });
+    } else {
+      res.status(400).json({ message: 'Invalid QR data' });
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
