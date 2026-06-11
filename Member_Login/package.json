@@ -1,0 +1,30 @@
+{
+  "name": "society-management-backend",
+  "version": "1.0.0",
+  "description": "Society Management System backend prototype",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "seed": "node src/seed/seed.js",
+    "automate-postman": "node scripts/automate-postman.js",
+    "test:api": "npm run automate-postman && node scripts/run-newman-tests.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "connect-mongo": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.0",
+    "mongodb": "^7.2.0",
+    "mongoose": "^8.6.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "newman": "^6.2.2",
+    "newman-reporter-htmlextra": "^1.23.1"
+  }
+}
